@@ -21,8 +21,8 @@ def get_total_pages(html):
 def get_page_data(html):
     soup = BeautifulSoup(html, 'lxml')
 
-    ads = soup.find('div', class_='col-sm-16').find_all('div',
-                                                        class_='thumbnail')
+    ads = soup.find('div', class_='col-sm-16').find_all(
+        'div', class_='thumbnail')
 
     for ad in ads:
         # project,stage,website,date_published
@@ -38,16 +38,14 @@ def get_page_data(html):
         except:
             stage = ''
 
-        data = {'project': project, 'stage': stage}
-        return data
+        data = {0: project, 1: stage}
+        print(data)
 
 
 def write_csv(data):
-
     with open('startups.csv', 'a') as file:
         writer = csv.writer(file)
         writer.writerow((data['project'], data['stage']))
-        print(data['project'], data['stage'])
 
 
 def main():
@@ -60,8 +58,7 @@ def main():
         url_gen = url + page_part + str(i)
         # print(url_gen)
         html = get_html(url_gen)
-        data = get_page_data(html)
-        write_csv(data)
+        print(get_page_data(html))
 
 
 if __name__ == '__main__':
